@@ -48,7 +48,7 @@ const HomePage = () => {
     const handleOutputCurrencyChange = (value) => setState((prevState) => ({ ...prevState, outputCurrency: value }));
     const handleVatNumberChange = (value) => setState((prevState) => ({ ...prevState, vatNumber: value }));
     const handleFileUpload = (value) => {
-
+        setState((prevState) => ({ ...prevState, file: '' }));
         if(value) {
             if(value.type != 'application/vnd.ms-excel')
             {
@@ -58,22 +58,6 @@ const HomePage = () => {
             }
         }
     }
-
-    // const props = {
-    //     name: 'file',
-    //     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    //     accept: '.csv',
-    //
-    //     onChange(info) {
-    //
-    //         if (info.file.status === 'done') {
-    //             message.success(`${info.file.name} file uploaded successfully`);
-    //             setState((prevState) => ({ ...prevState, file: info.fileList[0] }));
-    //         } else if (info.file.status === 'error') {
-    //             message.error(`${info.file.name} file upload failed.`);
-    //         }
-    //     },
-    // };
 
     return (
         <>
@@ -85,14 +69,14 @@ const HomePage = () => {
                 <Item
                     name="currencies"
                     label='Currency list (example: {"EUR":1,"USD":0.846405,"LV":0.51129188,"GBP":0.878} )'
-                    required={true}
+                    rules={[{required:true}]}
                 >
-                    <Input onChange={event => handleCurrencyListChange(event.target.value)} />
+                    <Input onChange={event => handleCurrencyListChange(event.target.value)}  />
                 </Item>
                 <Item
                     name="outputCurrency"
                     label="Your output currency (example: 'GBD')"
-                    required={true}
+                    rules={[{required:true}]}
                 >
                     <Input onChange={event => handleOutputCurrencyChange(event.target.value)} />
                 </Item>
@@ -107,12 +91,9 @@ const HomePage = () => {
                     name="file"
                     label="Upload csv file"
                 >
-                    <Input type="file" accept=".csv" onChange={event => handleFileUpload(event.target.files[0])} />
+                    <Input type="file" onChange={event => handleFileUpload(event.target.files[0])} />
                 </Item>
 
-                {/*<Upload {...props}>*/}
-                    {/*<Button icon={<UploadOutlined />}>Click to Upload</Button>*/}
-                {/*</Upload>*/}
                 <Button type="primary" htmlType="submit"> Calculate </Button>
             </Form>
         </>
